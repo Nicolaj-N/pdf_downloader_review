@@ -37,17 +37,19 @@ class ExcelReader:
 
     def __init__(self, file_path: str):
         self.file_path = file_path
+        self.df = pd.read_excel(self.file_path, engine="openpyxl")
 
     def read_reports(self) -> List[Report]:
-        df = pd.read_excel(self.file_path, engine="openpyxl")
-        print("Columns in Excel:", df.columns.tolist())
+        # df = pd.read_excel(self.file_path, engine="openpyxl")
+        # print("Columns in Excel:", df.columns.tolist())
+        # df = self.df
 
-        self._validate_columns(df)
+        self._validate_columns(self.df)
         reports = []
 
-        has_fallback_column = "Report Html Address" in df.columns
+        has_fallback_column = "Report Html Address" in self.df.columns
 
-        for _, row in df.iterrows():
+        for _, row in self.df.iterrows():
 
             primary_url = row["Pdf_URL"]
 
