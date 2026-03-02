@@ -1,3 +1,10 @@
+"""_summary_
+
+       The orchestrator coordinates the workflow of the application.
+       It connects the Excel reader and the downloader service and controls
+       the execution order without containing business logic itself.
+"""
+
 from typing import List
 from app.models.report import Report
 from app.services.downloader import PDFDownloader
