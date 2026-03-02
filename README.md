@@ -6,7 +6,7 @@
 Dette projekt er en simpel PDF-downloader, som henter PDF-filer fra URL’er og gemmer dem lokalt.  
 Programmet understøtter parallel downloading ved brug af ThreadPoolExecutor og håndterer fejl som timeout og ugyldige links.
 
-Projektet indeholder også automatiske tests skrevet med unittest.
+
 
 ---
 
