@@ -50,7 +50,6 @@ from app.models.download_result import DownloadResult
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import List
 
-
 class PDFDownloader:
     def __init__(
         self,
@@ -108,6 +107,7 @@ class PDFDownloader:
 
         # 2️ Try primary URL
         if self._try_download(report.primary_url, file_path):
+            print(f"attempting to download {report.br_number} from primary url")
             return DownloadResult(
                 br_number=report.br_number,
                 primary_url=report.primary_url,
@@ -120,6 +120,7 @@ class PDFDownloader:
         # 3️ Try fallback URL
         if report.fallback_url:
             if self._try_download(report.fallback_url, file_path):
+                print(f"attempting to download {report.br_number} from fallback url")
                 return DownloadResult(
                     br_number=report.br_number,
                     primary_url=report.primary_url,
@@ -144,13 +145,18 @@ class PDFDownloader:
             return False
         for attempt in range(self.max_retries):
             try:
+                headers = {'Content-Type': 'application/pdf'}
                 response = requests.get(
                     url,
                     timeout=self.timeout_seconds,
                     stream=True,
+                    # headers['Content-Type'] = "application/pdf"
                 )
-
+                print(response.url)
+                print(response.headers)
+            
                 if response.status_code == 200:
+                    # if response.headers.get('content-type') == 'application/pdf':
                     with open(file_path, "wb") as file:
                         for chunk in response.iter_content(chunk_size=8192):
                             file.write(chunk)
