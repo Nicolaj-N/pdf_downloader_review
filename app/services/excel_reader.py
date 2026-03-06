@@ -37,6 +37,9 @@ class ExcelReader:
 
     def __init__(self, file_path: str):
         self.file_path = file_path
+
+        # Moved this here, but it should've been in its own function
+        # Separated it from read_reports to make unit tests for removing empty rows
         self.df = pd.read_excel(self.file_path, engine="openpyxl")
 
     def read_reports(self) -> List[Report]:

@@ -151,7 +151,7 @@ class PDFDownloader:
                     stream=True,
                 )
 
-                # Check if we're dealing with a pdf
+                # Check if we're dealing with a pdf page to avoid downloading html pages
                 if response.headers.get('content-type') == 'application/pdf':
                     with open(file_path, "wb") as file:
                         for chunk in response.iter_content(chunk_size=8192):
