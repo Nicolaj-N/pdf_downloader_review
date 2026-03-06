@@ -145,18 +145,14 @@ class PDFDownloader:
             return False
         for attempt in range(self.max_retries):
             try:
-                headers = {'Content-Type': 'application/pdf'}
                 response = requests.get(
                     url,
                     timeout=self.timeout_seconds,
                     stream=True,
-                    # headers['Content-Type'] = "application/pdf"
                 )
-                print(response.url)
-                print(response.headers)
-            
-                if response.status_code == 200:
-                    # if response.headers.get('content-type') == 'application/pdf':
+
+                # Check if we're dealing with a pdf
+                if response.headers.get('content-type') == 'application/pdf':
                     with open(file_path, "wb") as file:
                         for chunk in response.iter_content(chunk_size=8192):
                             file.write(chunk)
